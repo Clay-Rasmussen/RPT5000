@@ -3,7 +3,7 @@ ___
 
 ## Overview
 ___
-The RPT5000 program is an enhanced COBOL reporting tool designed to process customer sales data and generate a structured, year-to-date 
+The **RPT5000** program is an enhanced COBOL reporting tool designed to process customer sales data and generate a structured, year-to-date 
 sales report organized by branch and sales representative.
 
 Building upon the foundations of its predecessor (RPT3000), this version introduces control break processing, detailed sales comparisons, 
@@ -22,19 +22,22 @@ ___
 
 ### Key Functionalities
 ___
- * Reads and processes a fixed-format customer master file
- * Groups data by branch and sales representative using control breaks
- * Calculates:
-   * Year-to-date sales (current vs. previous year)
-   * Sales change amount
-   * Sales change percentage
- * Prints:
-   * Individual customer detail lines
-   * Sales representative totals
-   * Branch totals
-   * Grand totals for the entire report
- * Handles pagination with headers including date, time, and page number
- * Formats output into a clean, readable report layout
+ * **EVALUATE** Statement
+Used to simplify complex decision-making by replacing multiple IF statements, especially for handling control breaks and end-of-file processing.
+ * 88-Level Condition Names
+Improved readability by using condition names like CUSTMAST-EOF and NOT-FIRST-RECORD instead of raw values.
+ * Control Break Processing
+Implemented logic to detect changes in branch and sales representative, triggering subtotal calculations and formatted output sections.
+ * Sequential File Processing
+Read and processed fixed-format customer records from an input file, demonstrating structured batch processing.
+ * Accumulation and Reset of Totals
+Used ADD and MOVE ZERO to maintain and reset running totals for sales representatives, branches, and grand totals.
+ * Arithmetic Calculations with Error Handling
+Applied **COMPUTE** statements with **ROUNDED** and **ON SIZE ERROR** to safely calculate sales changes and percentages.
+ * Pagination and Report Formatting
+Controlled page layout using line counters, headings, and spacing to produce a clean, professional report.
+ * Modular Program Structure (Paragraphs & PERFORM)
+Organized logic into reusable paragraphs, improving readability, maintainability, and program flow.
 
 ## Tech Stack
 ___
