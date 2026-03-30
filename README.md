@@ -52,8 +52,7 @@ ___
 
 ## Running Output
 ___
-![Code Running](assets/CodeRunning_1.png)
-![Code Running 2](assets/CodeRunning_2.png)
+![Code Running](assets/RunningOutput_3.png)
 
 ## Learning Outcomes
 ___
