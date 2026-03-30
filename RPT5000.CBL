@@ -3,7 +3,7 @@
        PROGRAM-ID. RPT5000.
       *****************************************************************
       *  Programmers: Clay Rasmussen and Kirby Dunker
-      *  Date.......: March 26, 2025
+      *  Date.......: March 30, 2025
       *  GitHub URL.: https://github.com/KirbyD-YEAH/RPT5000
       *  Description: This program reads a customer master file and
       *  produces a year-to-date sales report by branch.
@@ -63,7 +63,7 @@
            05  SPACE-CONTROL   PIC S9.
 
        01  TOTAL-FIELDS.
-           05 SALESREP-TOTAL-THIS-YTD PIC S9(6)V99   VALUE ZERO. 
+           05 SALESREP-TOTAL-THIS-YTD PIC S9(6)V99   VALUE ZERO.
            05 SALESREP-TOTAL-LAST-YTD PIC S9(6)V99   VALUE ZERO.
            05 BRANCH-TOTAL-THIS-YTD   PIC S9(6)V99   VALUE ZERO.
            05 BRANCH-TOTAL-LAST-YTD   PIC S9(6)V99   VALUE ZERO.
@@ -127,21 +127,21 @@
 
        01  HEADING-LINE-5.
            05  FILLER PIC X(6)  VALUE ALL "-".
-           05  FILLER PIC X(1)  VALUE SPACE.
-           05  FILLER PIC X(5)  VALUE ALL "-".
-           05  FILLER PIC X(1)  VALUE SPACE.
-           05  FILLER PIC X(5)  VALUE ALL "-".
            05  FILLER PIC X(2)  VALUE SPACE.
-           05  FILLER PIC X(20) VALUE ALL "-".
+           05  FILLER PIC X(5)  VALUE ALL "-".
+           05  FILLER PIC X(1)  VALUE SPACE.
+           05  FILLER PIC X(5)  VALUE ALL "-".
+           05  FILLER PIC X(1)  VALUE SPACE.
+           05  FILLER PIC X(22) VALUE ALL "-".
            05  FILLER PIC X(3)  VALUE SPACE.
            05  FILLER PIC X(10) VALUE ALL "-".
            05  FILLER PIC X(4)  VALUE SPACE.
            05  FILLER PIC X(10) VALUE ALL "-".
            05  FILLER PIC X(4)  VALUE SPACE.
            05  FILLER PIC X(10) VALUE ALL "-".
-           05  FILLER PIC X(3)  VALUE SPACE.
+           05  FILLER PIC X(4)  VALUE SPACE.
            05  FILLER PIC X(7)  VALUE ALL "-".
-           05  FILLER PIC X(39) VALUE SPACE.
+           05  FILLER PIC X(38) VALUE SPACE.
 
        01  CUSTOMER-LINE.
            05  FILLER              PIC X(1)    VALUE SPACE.
@@ -163,7 +163,7 @@
            05  FILLER              PIC X(47)   VALUE SPACE.
 
        01  SALESREP-TOTAL-LINE.
-           05  FILLER              PIC X(23)   VALUE SPACE.
+           05  FILLER              PIC X(30)   VALUE SPACE.
            05  FILLER              PIC X(14)   VALUE "SALESREP TOTAL".
            05  STL-SALES-THIS-YTD  PIC ZZZ,ZZ9.99-.
            05  FILLER              PIC X(3)    VALUE SPACE.
@@ -175,7 +175,7 @@
            05  FILLER              PIC X(47)   VALUE "*".
 
        01  BRANCH-TOTAL-LINE.
-           05  FILLER              PIC X(23)   VALUE SPACE.
+           05  FILLER              PIC X(30)   VALUE SPACE.
            05  FILLER              PIC X(14)   VALUE "BRANCH TOTAL".
            05  BTL-SALES-THIS-YTD  PIC ZZZ,ZZ9.99-.
            05  FILLER              PIC X(3)    VALUE SPACE.
@@ -187,7 +187,7 @@
            05  FILLER              PIC X(47)   VALUE "**".
 
        01  GRAND-TOTAL-LINE-1.
-           05  FILLER              PIC X(23)   VALUE SPACE.
+           05  FILLER              PIC X(25)   VALUE SPACE.
            05  FILLER              PIC X(12)   VALUE "GRAND TOTAL:".
            05  FILLER              PIC X(8)    VALUE SPACE.
            05  FILLER              PIC X(10)   VALUE ALL "=".
@@ -200,7 +200,7 @@
            05  FILLER              PIC X(47)   VALUE "***".
 
        01  GRAND-TOTAL-LINE-2.
-           05  FILLER              PIC X(41)   VALUE SPACE.
+           05  FILLER              PIC X(43)   VALUE SPACE.
            05  GTL-SALES-THIS-YTD  PIC Z,ZZZ,ZZ9.99-.
            05  FILLER              PIC X(1)    VALUE SPACE.
            05  GTL-SALES-LAST-YTD  PIC Z,ZZZ,ZZ9.99-.
@@ -211,14 +211,11 @@
            05  FILLER              PIC X(37)   VALUE SPACE.
            05  FILLER              PIC X(47)   VALUE "***".
 
-       01  DASH-SEPARATOR-LINE.
-           05  FILLER PIC X(130) VALUE ALL "-".
-
 
       * This is the main control paragraph of the program. It opens the
-      * input and output files, initializes the report heading, 
+      * input and output files, initializes the report heading,
       * processes all customer records until end-of-file, prints the
-      * grand totals, and then closes the files before terminating 
+      * grand totals, and then closes the files before terminating
       * execution.
        PROCEDURE DIVISION.
        000-PREPARE-SALES-REPORT.
@@ -232,9 +229,10 @@
                  OUTPUT-RPT5000.
            STOP RUN.
 
+
       * This paragraph retrieves the current system date and time using
-      * the CURRENT-DATE function. It formats and moves the date and 
-      * time values into the heading fields used for printing the 
+      * the CURRENT-DATE function. It formats and moves the date and
+      * time values into the heading fields used for printing the
       * report header.
        100-FORMAT-REPORT-HEADING.
            MOVE FUNCTION CURRENT-DATE TO CURRENT-DATE-AND-TIME.
@@ -243,6 +241,7 @@
            MOVE CD-YEAR    TO HL1-YEAR.
            MOVE CD-HOURS   TO HL2-HOURS.
            MOVE CD-MINUTES TO HL2-MINUTES.
+
 
       * This is the main processing loop for the report. It reads each
       * customer record and determines control breaks using an EVALUATE
@@ -273,13 +272,15 @@
             PERFORM 320-PRINT-CUSTOMER-LINE
             END-EVALUATE.
 
+
       * This paragraph reads the next record from the input file.
-      * If the end of the file is reached, it sets the CUSTMAST-EOF 
+      * If the end of the file is reached, it sets the CUSTMAST-EOF
       * condition to stop further processing.
        310-READ-CUSTOMER-RECORD.
            READ INPUT-CUSTMAST
               AT END
                  SET CUSTMAST-EOF TO TRUE.
+
 
       * This paragraph formats and prints a single customer detail line.
       * It handles pagination, moves customer data into print fields,
@@ -295,13 +296,7 @@
                  MOVE CM-BRANCH-NUMBER TO CL-BRANCH-NUMBER
               ELSE
                  MOVE SPACE TO CL-BRANCH-NUMBER.
-
-           IF CM-SALESREP-NUMBER = OLD-SALESREP-NUMBER 
-              MOVE SPACE TO CL-SALESREP-NUMBER 
-           ELSE
-              MOVE CM-SALESREP-NUMBER TO CL-SALESREP-NUMBER 
-           END-IF
- 
+           MOVE CM-SALESREP-NUMBER TO CL-SALESREP-NUMBER.
            MOVE CM-CUSTOMER-NUMBER TO CL-CUSTOMER-NUMBER.
            MOVE CM-CUSTOMER-NAME TO CL-CUSTOMER-NAME.
            MOVE CM-SALES-THIS-YTD TO CL-SALES-THIS-YTD.
@@ -322,8 +317,9 @@
            ADD CM-SALES-THIS-YTD TO SALESREP-TOTAL-THIS-YTD.
            ADD CM-SALES-LAST-YTD TO SALESREP-TOTAL-LAST-YTD.
 
-      * This paragraph handles page breaks and prints the report 
-      * headings. It increments the page number, prints all heading 
+
+      * This paragraph handles page breaks and prints the report
+      * headings. It increments the page number, prints all heading
       * lines, and resets the line counter for the new page.
        330-PRINT-HEADING-LINES.
            ADD 1 TO PAGE-COUNT.
@@ -338,8 +334,12 @@
            MOVE HEADING-LINE-4 TO PRINT-AREA.
            MOVE 1 TO SPACE-CONTROL.
            PERFORM 350-WRITE-REPORT-LINE.
+           MOVE HEADING-LINE-5 TO PRINT-AREA.
+           MOVE 1 TO SPACE-CONTROL.
+           PERFORM 350-WRITE-REPORT-LINE.
            MOVE ZERO TO LINE-COUNT.
            MOVE 2 TO SPACE-CONTROL.
+
 
       * This paragraph writes the first line of a new page (top line)
       * to the output file and initializes the line count.
@@ -347,20 +347,19 @@
            WRITE PRINT-AREA.
            MOVE 1 TO LINE-COUNT.
 
-      * This is a utility paragraph used to write a single formatted 
+
+      * This is a utility paragraph used to write a single formatted
       * line (PRINT-AREA) to the output report file.
        350-WRITE-REPORT-LINE.
            WRITE PRINT-AREA.
 
+
       * This paragraph prints totals for a sales representative.
-      * It calculates total sales, change amount, and percentage, 
+      * It calculates total sales, change amount, and percentage,
       * prints separator lines, outputs the sales representative totals,
-      * and resets the sales representative accumulators. It also rolls 
+      * and resets the sales representative accumulators. It also rolls
       * totals into the branch totals.
        355-PRINT-SALESREP-LINE.
-           MOVE DASH-SEPARATOR-LINE TO PRINT-AREA
-           MOVE 1 TO SPACE-CONTROL
-           PERFORM 350-WRITE-REPORT-LINE
            MOVE SALESREP-TOTAL-THIS-YTD TO STL-SALES-THIS-YTD.
            MOVE SALESREP-TOTAL-LAST-YTD TO STL-SALES-LAST-YTD.
            COMPUTE WS-CHANGE-AMOUNT =
@@ -373,13 +372,10 @@
                  WS-CHANGE-AMOUNT * 100 / SALESREP-TOTAL-LAST-YTD
                  ON SIZE ERROR
                     MOVE 999.9 TO STL-CHANGE-PERCENT.
+
            MOVE SALESREP-TOTAL-LINE TO PRINT-AREA.
            MOVE 1 TO SPACE-CONTROL.
            PERFORM 350-WRITE-REPORT-LINE.
-
-           MOVE DASH-SEPARATOR-LINE TO PRINT-AREA
-           MOVE 1 TO SPACE-CONTROL
-           PERFORM 350-WRITE-REPORT-LINE
 
            MOVE 2 TO SPACE-CONTROL.
            ADD SALESREP-TOTAL-THIS-YTD TO BRANCH-TOTAL-THIS-YTD.
@@ -387,15 +383,12 @@
            MOVE ZERO TO SALESREP-TOTAL-THIS-YTD.
            MOVE ZERO TO SALESREP-TOTAL-LAST-YTD.
 
-      * This paragraph prints totals for a branch. It calculates total 
-      * sales, change amount, and percentage, prints separator lines, 
-      * outputs the branch totals, and resets the branch accumulators. 
+
+      * This paragraph prints totals for a branch. It calculates total
+      * sales, change amount, and percentage, prints separator lines,
+      * outputs the branch totals, and resets the branch accumulators.
       * It also adds totals to the grand totals.
        360-PRINT-BRANCH-LINE.
-           MOVE DASH-SEPARATOR-LINE TO PRINT-AREA
-           MOVE 1 TO SPACE-CONTROL
-           PERFORM 350-WRITE-REPORT-LINE
-
            MOVE BRANCH-TOTAL-THIS-YTD TO BTL-SALES-THIS-YTD.
            MOVE BRANCH-TOTAL-LAST-YTD TO BTL-SALES-LAST-YTD.
            COMPUTE WS-CHANGE-AMOUNT =
@@ -412,9 +405,8 @@
            MOVE 1 TO SPACE-CONTROL.
            PERFORM 350-WRITE-REPORT-LINE.
 
-           MOVE DASH-SEPARATOR-LINE TO PRINT-AREA
-           MOVE 1 TO SPACE-CONTROL
-           PERFORM 350-WRITE-REPORT-LINE
+           MOVE SPACES TO PRINT-AREA.
+           PERFORM 350-WRITE-REPORT-LINE.
 
            MOVE 2 TO SPACE-CONTROL.
            ADD BRANCH-TOTAL-THIS-YTD TO GRAND-TOTAL-THIS-YTD.
@@ -422,8 +414,9 @@
            MOVE ZERO TO BRANCH-TOTAL-THIS-YTD.
            MOVE ZERO TO BRANCH-TOTAL-LAST-YTD.
 
-      * This paragraph calculates and prints the overall grand totals 
-      * for the report. It computes the total change amount and 
+
+      * This paragraph calculates and prints the overall grand totals
+      * for the report. It computes the total change amount and
       * percentage, then outputs the final summary lines at the end of
       * the report.
        500-PRINT-GRAND-TOTALS.
