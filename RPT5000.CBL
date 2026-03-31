@@ -95,7 +95,7 @@
            05  FILLER          PIC X(20)   VALUE "YEAR-TO-DATE SALES R".
            05  FILLER          PIC X(5)    VALUE "EPORT".
            05  FILLER          PIC X(23)   VALUE SPACE.
-           05  FILLER          PIC X(6)    VALUE "PAGE: ".
+           05  FILLER          PIC X(9)    VALUE "   PAGE: ".
            05  HL1-PAGE-NUMBER PIC ZZZ9.
 
        01  HEADING-LINE-2.
@@ -103,7 +103,7 @@
            05  HL2-HOURS       PIC 9(2).
            05  FILLER          PIC X(1)    VALUE ":".
            05  HL2-MINUTES     PIC 9(2).
-           05  FILLER          PIC X(72)   VALUE SPACE.
+           05  FILLER          PIC X(75)   VALUE SPACE.
            05  FILLER          PIC X(7)   VALUE "RPT5000".
 
        01  HEADING-LINE-3.
@@ -111,8 +111,8 @@
            05  FILLER PIC X(13) VALUE "SALES CUST   ".
            05  FILLER PIC X(23) VALUE "SALES                  ".
            05  FILLER PIC X(16) VALUE "  SALES    ".
-           05  FILLER PIC X(14) VALUE "CHANGE        ".
-           05  FILLER PIC X(7)  VALUE "CHANGE ".
+           05  FILLER PIC X(15) VALUE "CHANGE         ".
+           05  FILLER PIC X(6)  VALUE "CHANGE".
            05  FILLER PIC X(44) VALUE SPACE.
 
        01  HEADING-LINE-4.
@@ -121,7 +121,7 @@
            05  FILLER PIC X(24) VALUE " CUSTOMER NAME          ".
            05  FILLER PIC X(16) VALUE "  THIS YTD      ".
            05  FILLER PIC X(14) VALUE "LAST YTD      ".
-           05  FILLER PIC X(13) VALUE "AMOUNT       ".
+           05  FILLER PIC X(13) VALUE " AMOUNT      ".
            05  FILLER PIC X(7)  VALUE "PERCENT".
            05  FILLER PIC X(44) VALUE SPACE.
 
@@ -187,9 +187,9 @@
            05  FILLER              PIC X(47)   VALUE "**".
 
        01  GRAND-TOTAL-LINE-1.
-           05  FILLER              PIC X(25)   VALUE SPACE.
+           05  FILLER              PIC X(30)   VALUE SPACE.
            05  FILLER              PIC X(12)   VALUE "GRAND TOTAL:".
-           05  FILLER              PIC X(8)    VALUE SPACE.
+           05  FILLER              PIC X(3)    VALUE SPACE.
            05  FILLER              PIC X(10)   VALUE ALL "=".
            05  FILLER              PIC X(4)    VALUE SPACE.
            05  FILLER              PIC X(10)   VALUE ALL "=".
@@ -197,18 +197,15 @@
            05  FILLER              PIC X(10)   VALUE ALL "=".
            05  FILLER              PIC X(4)    VALUE SPACE.
            05  FILLER              PIC X(7)    VALUE ALL "=".
-           05  FILLER              PIC X(47)   VALUE "***".
 
        01  GRAND-TOTAL-LINE-2.
            05  FILLER              PIC X(43)   VALUE SPACE.
            05  GTL-SALES-THIS-YTD  PIC Z,ZZZ,ZZ9.99-.
            05  FILLER              PIC X(1)    VALUE SPACE.
            05  GTL-SALES-LAST-YTD  PIC Z,ZZZ,ZZ9.99-.
-           05  FILLER              PIC X(1)    VALUE SPACE.
-           05  GTL-CHANGE-AMOUNT   PIC Z,ZZZ,ZZ9.99-.
-           05  FILLER              PIC X(4)    VALUE SPACE.
+\           05  GTL-CHANGE-AMOUNT   PIC Z,ZZZ,ZZ9.99-.
+           05  FILLER              PIC X(2)    VALUE SPACE.
            05  GTL-CHANGE-PERCENT  PIC ZZ9.9-.
-           05  FILLER              PIC X(37)   VALUE SPACE.
            05  FILLER              PIC X(47)   VALUE "***".
 
 
