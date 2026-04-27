@@ -12,7 +12,8 @@ amount and percentage.
 
 ## Table of Contents
 ___
-* [Key Functionalities](#key-functionalities)
+
+* [New Concepts](#new-concepts)
 * [Tech Stack](#tech-stack)
 * [Installation](#installation)
 * [Running Output](#running-output)
@@ -20,7 +21,8 @@ ___
 * [Help](#help)
 * [Authors](#authors)
 
-### Key Functionalities
+
+### New Concepts
 ___
  * **EVALUATE** Statement
 Used to simplify complex decision-making by replacing multiple IF statements, especially for handling control breaks and end-of-file processing.
